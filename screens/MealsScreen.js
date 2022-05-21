@@ -1,10 +1,10 @@
 
 import { StyleSheet, Text, View, FlatList } from 'react-native';
-import MealItem from '../components/MealItem';
 import { useLayoutEffect } from 'react';
 // import { useRoute } from '@react-navigation/native';
 
 import { MEALS, CATEGORIES } from '../data/dummy-data';
+import MealItemsList from '../components/MealItemsList';
 
 // We get the 'navigation' & 'route' prop because MealsScreen is registered as a Stack.Screen.
 function MealsScreen({ route, navigation }) {
@@ -30,44 +30,15 @@ function MealsScreen({ route, navigation }) {
     }, [catID, navigation]);
     
 
-    function renderMealItem(itemData) {
-        const item = itemData.item;
-
-        const mealItemProps = {
-            id: item.id,
-            color: catColor,
-            title: item.title,
-            imageUrl: item.imageUrl,
-            duration: item.duration,
-            affordability: item.affordability,
-            complexity: item.complexity,
-            ingredients: item.ingredients
-        }
-
-        return (
-            <MealItem 
-                {...mealItemProps}
-            />
-        )
-
-    }
+   
 
     return (
-        <View style={styles.container}>
-            <FlatList 
-                data={displayedMeals}
-                keyExtractor={(item) => item.id}
-                renderItem={renderMealItem}
-            />
-        </View>
+        <MealItemsList displayedMeals={displayedMeals} catColor={catColor}/>
     )
 }
 
 export default MealsScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1, 
-        padding: 24
-    }
+
 });

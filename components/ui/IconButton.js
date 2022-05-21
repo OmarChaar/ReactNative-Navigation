@@ -2,7 +2,7 @@
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 
-function ItemButton({icon, onPress}) {
+function IconButton({icon, onPress}) {
 
     return (
         <TouchableOpacity
@@ -13,4 +13,4 @@ function ItemButton({icon, onPress}) {
     )
 }
 
-export default ItemButton;
+export default IconButton;

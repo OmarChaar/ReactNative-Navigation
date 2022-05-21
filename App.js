@@ -9,6 +9,7 @@ import CategoriesScreen from './screens/CategoriesScreen';
 import MealsScreen from './screens/MealsScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
+import FavoritesContextProvider from './store/context/favorites-context';
 
 // A stack of the screens being used.
 const Stack = createNativeStackNavigator();
@@ -56,50 +57,51 @@ export default function App() {
     <>
       <StatusBar style='dark'></StatusBar>
 
-      <NavigationContainer>
+      <FavoritesContextProvider>
+        <NavigationContainer>
 
-        <Stack.Navigator 
-          screenOptions={{  
-            headerStyle: {backgroundColor: '#cccccc'},
-            headerTitleAlign: 'center',
-            headerBackTitle: ''
-          }}
-        >
-          {/* NETSTED NAVIGATOR */}
-          <Stack.Screen 
-            name='MealsCategories'
-            component={DrawerNavigator} 
-            options={{
-              headerShown: false
+          <Stack.Navigator 
+            screenOptions={{  
+              headerStyle: {backgroundColor: '#cccccc'},
+              headerTitleAlign: 'center',
+              headerBackTitle: ''
             }}
-          />
-          <Stack.Screen 
-            name='Meals' 
-            component={MealsScreen}
-            
-            /*
-             WE WILL SET SPECIFIC SCREEN FROM WITHIN THE COMPONENT ITSELF
+          >
+            {/* NETSTED NAVIGATOR */}
+            <Stack.Screen 
+              name='MealsCategories'
+              component={DrawerNavigator} 
+              options={{
+                headerShown: false
+              }}
+            />
+            <Stack.Screen 
+              name='Meals' 
+              component={MealsScreen}
+              
+              /*
+              WE WILL SET SPECIFIC SCREEN FROM WITHIN THE COMPONENT ITSELF
 
-            options={({route, navigation}) => {
-              const catID = route.params.categoryID;
-              return {
-                title: catID
-              }
-            }}
-            */
-    
-          />
+              options={({route, navigation}) => {
+                const catID = route.params.categoryID;
+                return {
+                  title: catID
+                }
+              }}
+              */
+      
+            />
 
-          <Stack.Screen 
-            name='MealDetails'
-            component={MealDetailScreen} 
-          />
-        </Stack.Navigator>
+            <Stack.Screen 
+              name='MealDetails'
+              component={MealDetailScreen} 
+            />
+          </Stack.Navigator>
 
-       
+        
 
-      </NavigationContainer>
-
+        </NavigationContainer>
+      </FavoritesContextProvider>
     </>
   );
 }

@@ -1,26 +1,29 @@
 
-import { StyleSheet, Text, View, FlatList, Image, ScrollView } from 'react-native';
-import { useLayoutEffect } from 'react';
-import { Ionicons } from '@expo/vector-icons'; 
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { useLayoutEffect, useContext } from 'react';
 
 import { MEALS } from '../data/dummy-data';
 import Ingredients from '../components/ui/Ingredients';
-import ItemButton from '../components/ui/IconButton';
-
+import IconButton from '../components/ui/IconButton';
+import { FavoritesContext } from '../store/context/favorites-context';
 
 function MealDetailScreen({route, navigation}) {
 
-    let loved = false;
+    // Standard React
+    const favoriteMealContext = useContext(FavoritesContext);
 
     const mealID = route.params.mealID;
     const chosenMeal = MEALS.find((meal) => meal.id === mealID);
 
-    console.log(chosenMeal.imageUrl);
+    const mealIsFavorite = favoriteMealContext.ids.includes(mealID);
 
-    function headerButtonHandler() {
-      
-        loved = !loved;
-        console.log(loved);
+    function changeFavoriteStatusHandler() {
+        if(mealIsFavorite) {
+            favoriteMealContext.removeFavorite(mealID);
+        }
+        else {
+            favoriteMealContext.addFavorite(mealID);
+        }
     }
 
     useLayoutEffect(() => {
@@ -28,11 +31,11 @@ function MealDetailScreen({route, navigation}) {
             title: 'Details',
             headerRight: () => {
                 return (
-                    <ItemButton icon={loved === true ? "star" : "heart-outline"} onPress={headerButtonHandler}/>
+                    <IconButton icon={mealIsFavorite ? 'heart' : 'heart-outline'} onPress={changeFavoriteStatusHandler} />
                 )
             } 
         })
-    }, [navigation]);
+    }, [navigation, changeFavoriteStatusHandler]);
 
     function displaySteps(item, index) {
         return (
