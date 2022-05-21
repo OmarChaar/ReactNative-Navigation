@@ -1,5 +1,9 @@
 import { createContext, useState  } from "react";
 
+/*
+    MANAGING APP WIDE STATE WITH CONTEXT
+*/
+
 export const FavoritesContext = createContext({
     ids: [],
     addFavorite: (id) => {},
